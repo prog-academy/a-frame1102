@@ -1,53 +1,47 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>JavaScript - A-Frame School</title>
     <meta charset="utf-8" />
-    <meta name="description" content="JavaScript - A-Frame School" />
-    <script src="https://aframe.io/releases/1.7.0/aframe.min.js"></script>
-
+    <title>Cursor Handler - A-Frame School</title>
+    <meta name="description" content="Cursor Handler - A-Frame School" />
+    <script src="https://aframe.io/releases/0.5.0/aframe.min.js"></script>
     <script>
-      AFRAME.registerComponent("school-playground", {
+      AFRAME.registerComponent("handle-events", {
         init: function () {
-          const boxEl = this.el.querySelector("a-box");
+          var el = this.el;
+          var isScaledUp = false; // 状態管理用フラグ
 
-          // マウスがボックスに入ったときに色を青に変更
-          boxEl.addEventListener("mouseenter", () => {
-            boxEl.setAttribute("color", "#0000FF");
+          el.addEventListener("mouseenter", function () {
+            el.setAttribute("color", "#24CAFF");
           });
-
-          // マウスがボックスから出たときに色をもとに戻す
-          boxEl.addEventListener("mouseleave", () => {
-            boxEl.setAttribute("color", "#4CC3D9");
+          el.addEventListener("mouseleave", function () {
+            el.setAttribute("color", "#EF2D5E");
+          });
+          el.addEventListener("click", function () {
+            if (!isScaledUp) {
+              el.setAttribute("scale", { x: 2, y: 1, z: 2 });
+              isScaledUp = ;
+            } else {
+              el.setAttribute("scale", { x: 1, y: 1, z: 1 });
+              isScaledUp = ;
+            }
           });
         },
       });
     </script>
   </head>
   <body>
-    <a-scene school-playground>
-      <!-- カメラとマウスカーソル -->
-      <a-entity camera position="0 1.6 0">
-        <a-entity cursor="rayOrigin: mouse"></a-entity>
-      </a-entity>
+    <a-scene>
+      <a-box color="#EF2D5E" position="0 1 -4" handle-events></a-box>
 
-      <!-- クリック・フォーカス対象のボックス -->
-      <a-box
-        position="-1 0.5 -3"
-        rotation="0 45 0"
-        color="#4CC3D9"
-      ></a-box>
-
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>
+      <a-camera><a-cursor></a-cursor></a-camera>
+      <a-sky color="#333"></a-sky>
       <a-plane
-        position="0 0 -4"
+        color="#000"
         rotation="-90 0 0"
-        width="4"
-        height="4"
-        color="#7BC8A4"
+        width="500"
+        height="500"
       ></a-plane>
-      <a-sky color="#ECECEC"></a-sky>
     </a-scene>
   </body>
 </html>
